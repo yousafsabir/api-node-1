@@ -16,5 +16,14 @@
     "bugs": {
         "url": "https://github.com/yousafsabir/api-node-1/issues"
     },
-    "homepage": "https://github.com/yousafsabir/api-node-1#readme"
+    "homepage": "https://github.com/yousafsabir/api-node-1#readme",
+    "dependencies": {
+        "colors": "^1.4.0",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "mongoose": "^6.5.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.19"
+    }
 }
