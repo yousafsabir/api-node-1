@@ -11,6 +11,7 @@ const getGoals = (req, res) => {
     });
 };
 const createGoal = (req, res) => {
+    console.log(req.body);
     res.json({
         data: {
             purpose: "to create a goal",
