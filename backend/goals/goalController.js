@@ -5,27 +5,30 @@ const Goal = require("./goalModel");
 // Common Route for goals     api/goals/
 // access                     private
 const getGoals = asyncHandler(async (req, res) => {
+    const goals = await Goal.find();
+
     res.json({
         data: {
-            purpose: "getting goal",
-            type: "get request",
+            ok: "OK",
+            goals,
         },
         message: "successfully sent",
-        status: 200,
+        status: 300,
     });
 });
 const createGoal = asyncHandler(async (req, res) => {
-    if (!req.body.text) {
+    if (!req.body) {
         res.status(400);
         throw new Error("Please add some data");
     }
+    const goal = await Goal.create({
+        title: req.body.title,
+        desc: req.body.desc,
+    });
     res.json({
-        data: {
-            purpose: "to create a goal",
-            type: "post request",
-        },
-        message: "successfully sent",
         status: 200,
+        message: "goal added successfully",
+        goal,
     });
 });
 const updateGoal = asyncHandler(async (req, res) => {
