@@ -32,23 +32,21 @@ const createGoal = asyncHandler(async (req, res) => {
     });
 });
 const updateGoal = asyncHandler(async (req, res) => {
+    const updatedOne = await Goal.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+    });
     res.json({
-        data: {
-            purpose: `to update a goal id:${req.params.id}`,
-            type: "put request",
-        },
-        message: "successfully sent",
         status: 200,
+        message: "successfully updated",
+        updatedOne,
     });
 });
 const deleteGoal = asyncHandler(async (req, res) => {
+    const deletedOne = await Goal.findByIdAndDelete(req.params.id);
     res.json({
-        data: {
-            purpose: `to delete a goal id:${req.params.id}`,
-            type: "delete request",
-        },
-        message: "successfully sent",
+        message: "successfully deleted",
         status: 200,
+        deletedOne,
     });
 });
 
