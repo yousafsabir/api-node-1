@@ -1,4 +1,6 @@
+// asyncHandler provides try-catch features
 const asyncHandler = require("express-async-handler");
+const Goal = require("./goalModel");
 
 // Common Route for goals     api/goals/
 // access                     private
