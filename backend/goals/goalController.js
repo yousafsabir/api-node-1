@@ -1,6 +1,8 @@
+const asyncHandler = require("express-async-handler");
+
 // Common Route for goals     api/goals/
 // access                     private
-const getGoals = (req, res) => {
+const getGoals = asyncHandler(async (req, res) => {
     res.json({
         data: {
             purpose: "getting goal",
@@ -9,9 +11,12 @@ const getGoals = (req, res) => {
         message: "successfully sent",
         status: 200,
     });
-};
-const createGoal = (req, res) => {
-    console.log(req.body);
+});
+const createGoal = asyncHandler(async (req, res) => {
+    if (!req.body.text) {
+        res.status(400);
+        throw new Error("Please add some data");
+    }
     res.json({
         data: {
             purpose: "to create a goal",
@@ -20,8 +25,8 @@ const createGoal = (req, res) => {
         message: "successfully sent",
         status: 200,
     });
-};
-const updateGoal = (req, res) => {
+});
+const updateGoal = asyncHandler(async (req, res) => {
     res.json({
         data: {
             purpose: `to update a goal id:${req.params.id}`,
@@ -30,8 +35,8 @@ const updateGoal = (req, res) => {
         message: "successfully sent",
         status: 200,
     });
-};
-const deleteGoal = (req, res) => {
+});
+const deleteGoal = asyncHandler(async (req, res) => {
     res.json({
         data: {
             purpose: `to delete a goal id:${req.params.id}`,
@@ -40,7 +45,7 @@ const deleteGoal = (req, res) => {
         message: "successfully sent",
         status: 200,
     });
-};
+});
 
 module.exports = {
     getGoals,
