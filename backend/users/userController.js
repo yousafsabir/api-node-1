@@ -95,6 +95,7 @@ const getMe = asyncHandler(async (req, res) => {
     res.json({
         status: 200,
         message: "user data sent successfully",
+        user: req.user,
     });
 });
 
