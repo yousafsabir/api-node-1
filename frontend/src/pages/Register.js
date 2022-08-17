@@ -1,13 +1,29 @@
 import { useState, useEffect } from "react";
-import { FaSignInAlt } from "react-icons/fa";
+import { register } from "../features/auth/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { FaUser } from "react-icons/fa";
+import Statuses from "../constants/Statuses";
+import Actions from "../constants/Actions";
 
 function Register() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { status, action } = useSelector((state) => state.auth);
+    useEffect(() => {
+        if (status === Statuses.idle && action === Actions.register) {
+            navigate("/");
+        }
+    }, [status, action]);
     const [formData, setFormData] = useState({
+        name: "",
         email: "",
         password: "",
+        password2: "",
     });
+    console.log(formData);
 
-    const { email, password } = formData;
+    const { name, email, password, password2 } = formData;
 
     const OnChange = (e) => {
         setFormData((prev) => ({
@@ -17,18 +33,30 @@ function Register() {
     };
 
     const OnSubmit = (e) => {
-        e.prevenDefault();
+        e.preventDefault();
+        dispatch(register({ name, email, password }));
     };
 
     return (
         <>
             <section className="heading">
                 <h1>
-                    <FaSignInAlt /> Login
+                    <FaUser /> Register
                 </h1>
             </section>
             <section className="form">
                 <form onSubmit={OnSubmit}>
+                    <div className="form-group">
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="name"
+                            name="name"
+                            value={name}
+                            onChange={OnChange}
+                            placeholder="Enter Your Name"
+                        />
+                    </div>
                     <div className="form-group">
                         <input
                             type="email"
@@ -36,6 +64,7 @@ function Register() {
                             id="email"
                             name="email"
                             value={email}
+                            onChange={OnChange}
                             placeholder="Enter Email"
                         />
                     </div>
@@ -46,7 +75,19 @@ function Register() {
                             id="password"
                             name="password"
                             value={password}
+                            onChange={OnChange}
                             placeholder="Enter Password"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="password2"
+                            name="password2"
+                            value={password2}
+                            onChange={OnChange}
+                            placeholder="Confirm Password"
                         />
                     </div>
                     <div className="form-group">

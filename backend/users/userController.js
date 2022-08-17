@@ -15,9 +15,10 @@ const registerUser = asyncHandler(async (req, res) => {
             message: "please include all fields",
         });
     }
+    console.log("email:", email);
 
     // check if user already exists
-    const userExists = User.findOne({ email });
+    const userExists = await User.findOne({ email });
     if (userExists) {
         res.status(400).json({
             message: "user Already exists",
@@ -35,7 +36,7 @@ const registerUser = asyncHandler(async (req, res) => {
         password: hashedPass,
     });
     if (user) {
-        res.status(201).json({
+        return res.status(201).json({
             message: "user registered successfully",
             user: {
                 _id: user.id,
