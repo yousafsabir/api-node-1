@@ -52,8 +52,11 @@ export const register = createAsyncThunk(
             // on success
             localStorage.setItem("user", JSON.stringify(res.data.user));
             thunkApi.dispatch(setUser(res.data.user));
-            thunkApi.dispatch(setStatus(Statuses.idle));
             thunkApi.dispatch(setAction(Actions.register));
+            thunkApi.dispatch(setStatus(Statuses.idle));
+            setTimeout(() => {
+                thunkApi.dispatch(setAction(Actions.idle));
+            }, 1000);
             toast("✔ Signed in successfully");
         } catch (error) {
             // error

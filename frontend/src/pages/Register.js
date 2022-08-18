@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { register } from "../features/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ReactLoading from "react-loading";
 import { FaUser } from "react-icons/fa";
 import Statuses from "../constants/Statuses";
 import Actions from "../constants/Actions";
@@ -10,18 +11,27 @@ function Register() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { status, action } = useSelector((state) => state.auth);
+    const loading = Boolean(
+        status === Statuses.loading && action === Actions.register
+    );
+    const success = Boolean(
+        status === Statuses.idle && action === Actions.register
+    );
+    const error = Boolean(
+        status === Statuses.error && action === Actions.register
+    );
+    console.log("loading:", loading, "success:", success);
     useEffect(() => {
-        if (status === Statuses.idle && action === Actions.register) {
+        if (success) {
             navigate("/");
         }
-    }, [status, action]);
+    }, [success]);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         password: "",
         password2: "",
     });
-    console.log(formData);
 
     const { name, email, password, password2 } = formData;
 
@@ -92,7 +102,16 @@ function Register() {
                     </div>
                     <div className="form-group">
                         <button type="submit" className="btn btn-block">
-                            Submit
+                            {loading ? (
+                                <ReactLoading
+                                    type="spin"
+                                    color="#f3d789"
+                                    width={34}
+                                    height={34}
+                                />
+                            ) : (
+                                "submit"
+                            )}
                         </button>
                     </div>
                 </form>
