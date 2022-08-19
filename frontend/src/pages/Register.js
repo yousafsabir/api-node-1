@@ -20,12 +20,12 @@ function Register() {
     const error = Boolean(
         status === Statuses.error && action === Actions.register
     );
-    console.log("loading:", loading, "success:", success);
     useEffect(() => {
         if (success) {
             navigate("/");
         }
     }, [success]);
+
     const [formData, setFormData] = useState({
         name: "",
         email: "",

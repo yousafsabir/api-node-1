@@ -1,7 +1,31 @@
 import { useState, useEffect } from "react";
+import { login } from "../features/auth/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { FaSignInAlt } from "react-icons/fa";
+import ReactLoading from "react-loading";
+import Statuses from "../constants/Statuses";
+import Actions from "../constants/Actions";
 
 function Login() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { status, action } = useSelector((state) => state.auth);
+    const loading = Boolean(
+        status === Statuses.loading && action === Actions.login
+    );
+    const success = Boolean(
+        status === Statuses.idle && action === Actions.login
+    );
+    const error = Boolean(
+        status === Statuses.error && action === Actions.login
+    );
+    useEffect(() => {
+        if (success) {
+            navigate("/");
+        }
+    }, [success]);
+
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -17,7 +41,8 @@ function Login() {
     };
 
     const OnSubmit = (e) => {
-        e.prevenDefault();
+        e.preventDefault();
+        dispatch(login({ email, password }));
     };
 
     return (
@@ -53,7 +78,16 @@ function Login() {
                     </div>
                     <div className="form-group">
                         <button type="submit" className="btn btn-block">
-                            Submit
+                            {loading ? (
+                                <ReactLoading
+                                    type="spin"
+                                    color="#ccc"
+                                    width={34}
+                                    height={34}
+                                />
+                            ) : (
+                                "submit"
+                            )}
                         </button>
                     </div>
                 </form>
