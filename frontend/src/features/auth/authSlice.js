@@ -9,7 +9,7 @@ const user = JSON.parse(localStorage.getItem("user"));
 
 // thunks
 
-const API_URL = "http://localhost:8000/api/users/";
+const API_URL = "/api/users/";
 // localhost:8000 set in package.json
 
 export const register = createAsyncThunk(
@@ -37,7 +37,6 @@ export const register = createAsyncThunk(
                 error.message ||
                 error.toString();
             console.log("error message:", message);
-            thunkApi.dispatch(setAction(Actions.register));
             toast(`🔺 Error: ${message}`);
         }
     }

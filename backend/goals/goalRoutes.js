@@ -7,7 +7,7 @@ const {
     deleteGoal,
 } = require("./goalController");
 const { protect } = require("../middlewares/auth");
-
+// base url http://localhost:8000/api/goals/
 router.route("/").get(protect, getGoals).post(protect, createGoal);
 router.route("/:id").put(protect, updateGoal).delete(protect, deleteGoal);
 

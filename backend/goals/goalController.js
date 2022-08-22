@@ -6,9 +6,8 @@ const Goal = require("./goalModel");
 // access                     private
 const getGoals = asyncHandler(async (req, res) => {
     const goals = await Goal.find({ user: req.user.id });
-
-    res.status(300).json({
-        status: 300,
+    res.status(200).json({
+        status: 200,
         message: `successfully fetched goals for ${req.user.name}`,
         goals,
     });
